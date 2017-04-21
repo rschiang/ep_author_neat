@@ -152,7 +152,7 @@ authorNameAndColorFromAuthorId = (authorId) ->
   # It could always be me..
   if myAuthorId is authorId
     return do
-      name: 'Me'
+      name: window._('author.me')
       color: pad.myUserInfo.colorId
   # Not me, let's look up in the DOM
   authorObj = {}
@@ -160,7 +160,7 @@ authorNameAndColorFromAuthorId = (authorId) ->
     if authorId is ($ this).data 'authorid'
       $ this
         ..find '.usertdname' .each ->
-          authorObj.name = $ this .text! || 'Unknown Author'
+          authorObj.name = $ this .text! || window._('author.unknown')
         ..find '.usertdswatch > div' .each ->
           authorObj.color = $ this .css 'background-color'
       authorObj
@@ -169,7 +169,7 @@ authorNameAndColorFromAuthorId = (authorId) ->
     authorObj = clientVars.collab_client_vars.historicalAuthorData[authorId]
   # Try to use historical data
   authorObj or do
-    name: 'Unknown Author'
+    name: window._('author.unknown')
     color: '#fff'
 
 authorLines = {}
