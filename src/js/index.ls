@@ -105,15 +105,15 @@ getAuthorClassName = (author) ->
 var init
 function outerInit(outerDynamicCSS)
   outerDynamicCSS.selectorStyle '#sidedivinner > div.primary-author-none'
-    ..border-right = 'solid 0px '
-    ..padding-right = '5px'
+    ..border-left = 'solid 0px '
+    ..padding-left = '4px'
   outerDynamicCSS.selectorStyle '#sidedivinner > div.concise::before'
     ..content = "' '"
   outerDynamicCSS.selectorStyle '#sidedivinner > div'
     ..font-size = '0px'
-    ..padding-right = '10px'
+    ..padding-left = '12px'
   outerDynamicCSS.selectorStyle '#sidedivinner > div::before'
-    ..font-size = 'initial'
+    ..font-size = '1rem'
     ..text-overflow = 'ellipsis'
     ..overflow = 'hidden'
   init := true
@@ -129,16 +129,16 @@ export function aceSetAuthorStyle(name, context)
     authorName = authorNameAndColorFromAuthorId author .name
     # author style
     dynamicCSS.selectorStyle ".authorColors.focus span.#authorClass"
-      ..border-bottom = "2px solid #color"
+      ..border-bottom = "2px dotted #color"
     parentDynamicCSS.selectorStyle authorSelector
-      ..border-bottom = "2px solid #color"
+      ..border-bottom = "2px dotted #color"
     # primary author override
     dynamicCSS.selectorStyle ".authorColors.focus .primary-#authorClass .#authorClass"
       ..border-bottom = '0px'
     # primary author style on left
     outerDynamicCSS.selectorStyle "\#sidedivinner.authorColors > div.primary-#authorClass"
-      ..border-right = "solid 5px #{color}"
-      ..padding-right = '5px'
+      ..border-left = "solid 4px #{color}"
+      ..padding-left = '8px'
     outerDynamicCSS.selectorStyle "\#sidedivinner > div.primary-#authorClass::before"
       ..content = "'#{ authorName }'"
 
@@ -185,11 +185,13 @@ export function aceEditEvent(hook_name, {callstack}:context, cb)
   return unless callstack.type is \setWraps
   $ 'iframe[name="ace_outer"]' .contents!
     # no need for padding when we use borders
-    ..find '#sidediv' .css 'padding-right': '0px'
+    ..find '#sidediv' .css 'padding-left': '0px'
     # set max width to 180
     ..find '#sidedivinner' .css do
       'max-width': '180px'
       overflow: 'hidden'
+    # set align
+    ..find '#sidediv > table' .attr 'align', 'left'
 
 # For those who need them (< IE 9), add support for CSS functions
 isStyleFuncSupported = CSSStyleDeclaration::getPropertyValue?
